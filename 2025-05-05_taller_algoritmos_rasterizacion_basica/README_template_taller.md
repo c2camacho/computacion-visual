@@ -1,13 +1,13 @@
-# 🧪 Nombre del Taller
+# 🧪 taller_algoritmos_rasterizacion_basica
 
 ## 📅 Fecha
-`YYYY-MM-DD` – Fecha de entrega o realización
+`2025-05-05` – Fecha de entrega 
 
 ---
 
 ## 🎯 Objetivo del Taller
 
-Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar o construir?
+Comprender e implementar los algoritmos clásicos de rasterización para líneas, círculos y triángulos, entendiendo cómo se construyen imágenes píxel a píxel en una pantalla. El objetivo es desarrollar una base sólida sobre cómo se generan primitivas gráficas sin usar librerías de alto nivel.
 
 ---
 
@@ -15,12 +15,15 @@ Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar
 
 Lista los principales conceptos aplicados:
 
-- [ ] Transformaciones geométricas (escala, rotación, traslación)
-- [ ] Segmentación de imágenes
-- [ ] Shaders y efectos visuales
-- [ ] Entrenamiento de modelos IA
-- [ ] Comunicación por gestos o voz
-- [ ] Otro: _______________________
+este taller se centra en los algoritmos fundamentales para convertir representaciones geométricas básicas (líneas, círculos, triángulos) en una representación discreta de píxeles en una imagen rasterizada. Se exploran conceptos como:
+
+Discretización: Cómo convertir entidades continuas en un conjunto finito de puntos (píxeles).
+
+Eficiencia algorítmica: Buscar métodos que utilicen operaciones simples y minimicen cálculos costosos.
+
+Interpolación: Calcular valores intermedios (como las coordenadas x a lo largo de una línea de escaneo) basándose en los valores de los vértices.
+
+Recorrido y manipulación de píxeles: Cómo acceder y modificar los valores de color de los píxeles en una imagen.
 
 ---
 
@@ -29,26 +32,16 @@ Lista los principales conceptos aplicados:
 Especifica los entornos usados:
 
 - Python (`opencv-python`, `torch`, `mediapipe`, `diffusers`, etc.)
-- Unity (versión LTS, XR Toolkit, Shader Graph)
-- Three.js / React Three Fiber
-- Jupyter / Google Colab
-
-📌 Usa las herramientas según la [guía de instalación oficial](./guia_instalacion_entornos_visual.md)
 
 ---
 
 ## 📁 Estructura del Proyecto
 
 ```
-YYYY-MM-DD_nombre_taller/
-├── entorno/               # python/, unity/, threejs/, colab/
-├── datos/                 # imágenes, audio, modelos, video
-├── resultados/            # capturas, métricas, gifs
+Rasterización desde Cero: Dibujando con Algoritmos Clásicos/
+├── python/               # python
 ├── README.md
 ```
-
-📎 Sigue la estructura de entregas descrita en la [guía GitLab](./guia_gitlab_computacion_visual.md)
-
 ---
 
 ## 🧪 Implementación
@@ -56,20 +49,42 @@ YYYY-MM-DD_nombre_taller/
 Explica el proceso:
 
 ### 🔹 Etapas realizadas
-1. Preparación de datos o escena.
-2. Aplicación de modelo o algoritmo.
-3. Visualización o interacción.
-4. Guardado de resultados.
+1. Preparar el entorno de dibujo
+2. Dibujar una línea con el algoritmo de Bresenham
+3. Dibujar un círculo con el algoritmo de punto medio
+4. Rellenar un triángulo (simple rasterización por scanline)
+5. Mostrar el resultado
 
 ### 🔹 Código relevante
 
-Incluye un fragmento que resuma el corazón del taller:
-
 ```python
-# Segmentación semántica con DeepLab
-output = model(input_tensor)['out']
-prediction = output.argmax(1).squeeze().cpu().numpy()
-```
+
+def midpoint_circle(x0, y0, radius):
+    """
+    Dibuja un círculo centrado en (x0, y0) con el radio dado
+    utilizando el algoritmo de punto medio.
+    """
+    # Inicializar las coordenadas y la variable de decisión
+    x = radius
+    y = 0
+    p = 1 - radius
+
+    # Bucle para generar los puntos del primer octante
+    while x >= y:
+        # Dibujar los ocho puntos simétricos correspondientes al punto (x, y)
+        for dx, dy in [(x, y), (y, x), (-x, y), (-y, x), (-x, -y), (-y, -x), (x, -y), (y, -x)]:
+            # Verificar si las coordenadas están dentro de los límites de la imagen
+            if 0 <= x0 + dx < width and 0 <= y0 + dy < height:
+                # Establecer el color del píxel a azul
+                pixels[x0 + dx, y0 + dy] = (0, 0, 255)
+        # Incrementar la coordenada y
+        y += 1
+        # Actualizar la variable de decisión p
+        if p <= 0:
+            p = p + 2*y + 1
+        else:
+            x -= 1
+            p = p + 2*y - 2*x + 1
 
 ---
 
@@ -79,20 +94,8 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 
 > ✅ Si tu taller lo indica, debes incluir **al menos un GIF** mostrando la ejecución o interacción.
 
-- Usa `Peek`, `ScreenToGif`, `OBS`, o desde Python (`imageio`) para generar el GIF.
-- **El nombre del GIF debe ser descriptivo del punto que estás presentando.**
-- Ejemplo correcto:  
-  `deteccion_colores_rojo_verde_torres.gif`  
-  `movimiento_robot_esquiva_obstaculos_gomez.gif`  
-  `shader_gradiente_temporal_lopez.gif`
-
-🧭 [Ver guía para crear GIFs](./guia_generar_gif.md)
-
-```markdown
-![deteccion](./resultados/deteccion_colores_rojo_verde_torres.gif)
+![visualizacion de los objetos por el algoritmo de rasterización](.python\Taller6Py.gif)
 ```
-
-> ❌ No se aceptará la entrega si falta el GIF en talleres que lo requieren.
 
 ---
 
@@ -116,28 +119,5 @@ Responde en 2-3 párrafos:
 - ¿Qué aprendiste o reforzaste con este taller?
 - ¿Qué parte fue más compleja o interesante?
 - ¿Qué mejorarías o qué aplicarías en futuros proyectos?
-
----
-
-## 👥 Contribuciones Grupales (si aplica)
-
-Describe exactamente lo que hiciste tú:
-
-```markdown
-- Programé el detector de postura en MediaPipe
-- Generé los GIFs y documentación
-- Integré el control de voz con visualización en Unity
-```
-
----
-
-## ✅ Checklist de Entrega
-
-- [x] Carpeta `YYYY-MM-DD_nombre_taller`
-- [x] Código limpio y funcional
-- [x] GIF incluido con nombre descriptivo (si el taller lo requiere)
-- [x] Visualizaciones o métricas exportadas
-- [x] README completo y claro
-- [x] Commits descriptivos en inglés
 
 ---
