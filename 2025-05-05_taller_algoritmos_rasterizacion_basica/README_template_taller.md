@@ -94,7 +94,9 @@ def midpoint_circle(x0, y0, radius):
 
 > ✅ Si tu taller lo indica, debes incluir **al menos un GIF** mostrando la ejecución o interacción.
 
-![visualizacion de los objetos por el algoritmo de rasterización](.python\Taller6Py.gif)
+a continuacion el gif con los resultados 
+
+![visualizacion de los objetos por el algoritmo de rasterización](python/Taller6Py.gif)
 ```
 
 ---
