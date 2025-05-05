@@ -88,6 +88,8 @@ def midpoint_circle(x0, y0, radius):
 
 ---
 
+```
+
 ## 📊 Resultados Visuales
 
 ### 📌 Este taller **requiere explícitamente un GIF animado**:
@@ -97,17 +99,18 @@ def midpoint_circle(x0, y0, radius):
 a continuacion el gif con los resultados 
 
 ![visualizacion de los objetos por el algoritmo de rasterización](python/Taller6Py.gif)
+
 ```
-
 ---
-
 ## 🧩 Prompts Usados
 
 Enumera los prompts utilizados:
 
-```text
-"Create a photorealistic image of a robot painting a mural using Stable Diffusion"
-"Segment a car and a person using SAM at point (200, 300)"
+1. "Create a function that draws a complex geometric figure by combining lines and circles using the implemented functions."
+
+2. "Develop a small interactive program where the user can input the coordinates of a line or a circle, and it is drawn in the window."
+
+3. "Generate an image that represents an interesting pattern or design using only the implemented drawing functions."
 ```
 
 📎 Usa buenas prácticas de prompts según la [guía de IA actualizada](./guia_prompts_inteligencias_artificiales_actualizada.md)
@@ -116,10 +119,6 @@ Enumera los prompts utilizados:
 
 ## 💬 Reflexión Final
 
-Responde en 2-3 párrafos:
-
-- ¿Qué aprendiste o reforzaste con este taller?
-- ¿Qué parte fue más compleja o interesante?
-- ¿Qué mejorarías o qué aplicarías en futuros proyectos?
+Me ayudo a comprender como se usan los pixeles de manera muy primitiva ya que nunca pense el como funcionan estos algoritmos hasta hoy 
 
 ---
