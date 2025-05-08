@@ -1,13 +1,12 @@
-# 🧪 Nombre del Taller
-
+# 🧪 Importando el Mundo: Visualización y Conversión de Formatos 3D
 ## 📅 Fecha
-`YYYY-MM-DD` – Fecha de entrega o realización
+`2025-05-05` – Fecha de entrega
 
 ---
 
 ## 🎯 Objetivo del Taller
 
-Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar o construir?
+Comparar y convertir entre distintos formatos de modelos 3D: .OBJ, .STL y .GLTF, y visualizar sus diferencias en geometría y materiales. El objetivo es entender la estructura interna de los archivos 3D, su compatibilidad entre entornos, y cómo se interpretan en distintas plataformas de visualización.
 
 ---
 
@@ -15,12 +14,9 @@ Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar
 
 Lista los principales conceptos aplicados:
 
-- [ ] Transformaciones geométricas (escala, rotación, traslación)
-- [ ] Segmentación de imágenes
-- [ ] Shaders y efectos visuales
-- [ ] Entrenamiento de modelos IA
-- [ ] Comunicación por gestos o voz
-- [ ] Otro: _______________________
+- [ ] Manipulación de modelos 3D
+- [ ] Análisis de modelos
+- [ ] Conversión entre formatos
 
 ---
 
@@ -29,7 +25,6 @@ Lista los principales conceptos aplicados:
 Especifica los entornos usados:
 
 - Python (`opencv-python`, `torch`, `mediapipe`, `diffusers`, etc.)
-- Unity (versión LTS, XR Toolkit, Shader Graph)
 - Three.js / React Three Fiber
 - Jupyter / Google Colab
 
@@ -40,10 +35,9 @@ Especifica los entornos usados:
 ## 📁 Estructura del Proyecto
 
 ```
-YYYY-MM-DD_nombre_taller/
-├── entorno/               # python/, unity/, threejs/, colab/
-├── datos/                 # imágenes, audio, modelos, video
-├── resultados/            # capturas, métricas, gifs
+2025-05-05_taller_conversion_formatos_3d/
+├── threejs/              
+├── python/                  
 ├── README.md
 ```
 
@@ -56,19 +50,24 @@ YYYY-MM-DD_nombre_taller/
 Explica el proceso:
 
 ### 🔹 Etapas realizadas
-1. Preparación de datos o escena.
-2. Aplicación de modelo o algoritmo.
-3. Visualización o interacción.
-4. Guardado de resultados.
+1. Configuración del Entorno y Carga de Librerías
+2. Carga de Modelos 3D.
+3. Comparación de Propiedades.
+4. Visualización de Modelos y Propiedades.
+5. Conversión de Formatos
 
 ### 🔹 Código relevante
 
 Incluye un fragmento que resuma el corazón del taller:
 
 ```python
-# Segmentación semántica con DeepLab
-output = model(input_tensor)['out']
-prediction = output.argmax(1).squeeze().cpu().numpy()
+# 1. Comparación inicial de modelos originales
+print("=== COMPARACIÓN INICIAL DE MODELOS ORIGINALES ===")
+initial_results = {}
+for path in model_files:
+    mesh = load_model(path)
+    initial_results[Path(path).name] = analyze_model(mesh)
+visualize_comparison(initial_results)
 ```
 
 ---
@@ -79,18 +78,7 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 
 > ✅ Si tu taller lo indica, debes incluir **al menos un GIF** mostrando la ejecución o interacción.
 
-- Usa `Peek`, `ScreenToGif`, `OBS`, o desde Python (`imageio`) para generar el GIF.
-- **El nombre del GIF debe ser descriptivo del punto que estás presentando.**
-- Ejemplo correcto:  
-  `deteccion_colores_rojo_verde_torres.gif`  
-  `movimiento_robot_esquiva_obstaculos_gomez.gif`  
-  `shader_gradiente_temporal_lopez.gif`
-
-🧭 [Ver guía para crear GIFs](./guia_generar_gif.md)
-
-```markdown
-![deteccion](./resultados/deteccion_colores_rojo_verde_torres.gif)
-```
+![Conversión entre formatos](python/Taller8Py.gif)
 
 > ❌ No se aceptará la entrega si falta el GIF en talleres que lo requieren.
 
@@ -101,8 +89,9 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 Enumera los prompts utilizados:
 
 ```text
-"Create a photorealistic image of a robot painting a mural using Stable Diffusion"
-"Segment a car and a person using SAM at point (200, 300)"
+(1)"Write Python code in a Colab or Jupyter Notebook that uses the trimesh and open3d libraries to load three different 3D model files in .OBJ, .STL, and .GLTF formats. For each loaded model, print the number of vertices and faces. Additionally, determine and print whether each model has vertex and face normals, and if trimesh detects any duplicate vertices or degenerate faces. Finally, display each of the loaded models in a separate interactive viewer using the visualization capabilities of both trimesh and open3d."
+
+(2)"Extend the Python code from the previous step. Create a function that takes a loaded 3D model (either from trimesh or open3d) as input and returns a dictionary containing its vertex count, face count, the presence of normals, and (if using trimesh) information about duplicate vertices and degenerate faces. Apply this function to the three loaded models and print the resulting property dictionaries for comparison. Subsequently, using the trimesh.exchange module, convert the .OBJ model to .STL format and the .STL model to .GLTF format. Load the converted models and print their properties using the same function to observe any changes during the conversion process."
 ```
 
 📎 Usa buenas prácticas de prompts según la [guía de IA actualizada](./guia_prompts_inteligencias_artificiales_actualizada.md)
@@ -113,31 +102,6 @@ Enumera los prompts utilizados:
 
 Responde en 2-3 párrafos:
 
-- ¿Qué aprendiste o reforzaste con este taller?
-- ¿Qué parte fue más compleja o interesante?
-- ¿Qué mejorarías o qué aplicarías en futuros proyectos?
-
----
-
-## 👥 Contribuciones Grupales (si aplica)
-
-Describe exactamente lo que hiciste tú:
-
-```markdown
-- Programé el detector de postura en MediaPipe
-- Generé los GIFs y documentación
-- Integré el control de voz con visualización en Unity
-```
-
----
-
-## ✅ Checklist de Entrega
-
-- [x] Carpeta `YYYY-MM-DD_nombre_taller`
-- [x] Código limpio y funcional
-- [x] GIF incluido con nombre descriptivo (si el taller lo requiere)
-- [x] Visualizaciones o métricas exportadas
-- [x] README completo y claro
-- [x] Commits descriptivos en inglés
+- Realmente no era consciente de la cantidad y la disparidad de formatos existentes para modelos 3D. Esto me ha dejado impresionado bastante y me genera una preocupación inicial respecto a la posible complejidad de trabajar con ciertos formatos en el futuro.
 
 ---

@@ -1,13 +1,13 @@
-# 🧪 Nombre del Taller
+# 🧪 De Pixels a Coordenadas: Explorando la Imagen como Matriz
 
 ## 📅 Fecha
-`YYYY-MM-DD` – Fecha de entrega o realización
+`2025-05-05` – Fecha de entrega 
 
 ---
 
 ## 🎯 Objetivo del Taller
 
-Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar o construir?
+Comprender cómo se representa una imagen digital como una matriz numérica y manipular sus componentes a nivel de píxel. Se abordará cómo trabajar con los valores de color y brillo directamente, accediendo a regiones específicas de la imagen para su análisis o modificación.
 
 ---
 
@@ -15,12 +15,11 @@ Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar
 
 Lista los principales conceptos aplicados:
 
-- [ ] Transformaciones geométricas (escala, rotación, traslación)
-- [ ] Segmentación de imágenes
-- [ ] Shaders y efectos visuales
-- [ ] Entrenamiento de modelos IA
-- [ ] Comunicación por gestos o voz
-- [ ] Otro: _______________________
+- [ ] Carga y Representación de Imágenes a Color
+- [ ] Espacios de Color y Conversión
+- [ ] Manipulación de Regiones de Interés
+- [ ] Análisis de la Distribución de Intensidades con Histogramas
+- [ ] Ajustes de Brillo y Contraste
 
 ---
 
@@ -29,8 +28,6 @@ Lista los principales conceptos aplicados:
 Especifica los entornos usados:
 
 - Python (`opencv-python`, `torch`, `mediapipe`, `diffusers`, etc.)
-- Unity (versión LTS, XR Toolkit, Shader Graph)
-- Three.js / React Three Fiber
 - Jupyter / Google Colab
 
 📌 Usa las herramientas según la [guía de instalación oficial](./guia_instalacion_entornos_visual.md)
@@ -40,10 +37,8 @@ Especifica los entornos usados:
 ## 📁 Estructura del Proyecto
 
 ```
-YYYY-MM-DD_nombre_taller/
-├── entorno/               # python/, unity/, threejs/, colab/
-├── datos/                 # imágenes, audio, modelos, video
-├── resultados/            # capturas, métricas, gifs
+2025-05-05_taller_imagen_matriz_pixeles/
+├── python/               
 ├── README.md
 ```
 
@@ -56,9 +51,9 @@ YYYY-MM-DD_nombre_taller/
 Explica el proceso:
 
 ### 🔹 Etapas realizadas
-1. Preparación de datos o escena.
-2. Aplicación de modelo o algoritmo.
-3. Visualización o interacción.
+1. Preparación del Entorno y Carga de la Imagen.
+2. Cargar la Imagen a Color.
+3. Separar Canales RGB.
 4. Guardado de resultados.
 
 ### 🔹 Código relevante
@@ -66,9 +61,30 @@ Explica el proceso:
 Incluye un fragmento que resuma el corazón del taller:
 
 ```python
-# Segmentación semántica con DeepLab
-output = model(input_tensor)['out']
-prediction = output.argmax(1).squeeze().cpu().numpy()
+rojo = imagen_color_rgb[:, :, 0]
+verde = imagen_color_rgb[:, :, 1]
+azul = imagen_color_rgb[:, :, 2]
+
+# Mostrar los canales individuales en escala de grises
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 3, 1)
+plt.imshow(rojo, cmap='gray')
+plt.title('Canal Rojo')
+plt.axis('off')
+
+plt.subplot(1, 3, 2)
+plt.imshow(verde, cmap='gray')
+plt.title('Canal Verde')
+plt.axis('off')
+
+plt.subplot(1, 3, 3)
+plt.imshow(azul, cmap='gray')
+plt.title('Canal Azul')
+plt.axis('off')
+
+plt.tight_layout()
+plt.show()
 ```
 
 ---
@@ -79,18 +95,7 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 
 > ✅ Si tu taller lo indica, debes incluir **al menos un GIF** mostrando la ejecución o interacción.
 
-- Usa `Peek`, `ScreenToGif`, `OBS`, o desde Python (`imageio`) para generar el GIF.
-- **El nombre del GIF debe ser descriptivo del punto que estás presentando.**
-- Ejemplo correcto:  
-  `deteccion_colores_rojo_verde_torres.gif`  
-  `movimiento_robot_esquiva_obstaculos_gomez.gif`  
-  `shader_gradiente_temporal_lopez.gif`
-
-🧭 [Ver guía para crear GIFs](./guia_generar_gif.md)
-
-```markdown
-![deteccion](./resultados/deteccion_colores_rojo_verde_torres.gif)
-```
+![Explorando la Imagen como Matriz](python/Taller5Py.gif)
 
 > ❌ No se aceptará la entrega si falta el GIF en talleres que lo requieren.
 
@@ -101,8 +106,7 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 Enumera los prompts utilizados:
 
 ```text
-"Create a photorealistic image of a robot painting a mural using Stable Diffusion"
-"Segment a car and a person using SAM at point (200, 300)"
+"Write Python code using OpenCV, NumPy, and Matplotlib to: load a color image, display its individual RGB and HSV channels, modify a rectangular region by changing its color, replace another region with a different part of the image, calculate and show the color histograms, and finally, adjust the brightness and contrast of the image."
 ```
 
 📎 Usa buenas prácticas de prompts según la [guía de IA actualizada](./guia_prompts_inteligencias_artificiales_actualizada.md)
@@ -113,31 +117,6 @@ Enumera los prompts utilizados:
 
 Responde en 2-3 párrafos:
 
-- ¿Qué aprendiste o reforzaste con este taller?
-- ¿Qué parte fue más compleja o interesante?
-- ¿Qué mejorarías o qué aplicarías en futuros proyectos?
-
----
-
-## 👥 Contribuciones Grupales (si aplica)
-
-Describe exactamente lo que hiciste tú:
-
-```markdown
-- Programé el detector de postura en MediaPipe
-- Generé los GIFs y documentación
-- Integré el control de voz con visualización en Unity
-```
-
----
-
-## ✅ Checklist de Entrega
-
-- [x] Carpeta `YYYY-MM-DD_nombre_taller`
-- [x] Código limpio y funcional
-- [x] GIF incluido con nombre descriptivo (si el taller lo requiere)
-- [x] Visualizaciones o métricas exportadas
-- [x] README completo y claro
-- [x] Commits descriptivos en inglés
+- Siempre había escuchado lo de las imágenes separadas por R, G, B, pero ver eso en acción por primera vez es genial, la verdad.
 
 ---

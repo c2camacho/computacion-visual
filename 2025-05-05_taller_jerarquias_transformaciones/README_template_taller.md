@@ -1,13 +1,13 @@
-# 🧪 Nombre del Taller
+# 🧪 Jerarquías y Transformaciones: El Árbol del Movimiento
 
 ## 📅 Fecha
-`YYYY-MM-DD` – Fecha de entrega o realización
+`2025-05-05` – Fecha de entrega
 
 ---
 
 ## 🎯 Objetivo del Taller
 
-Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar o construir?
+Aplicar estructuras jerárquicas y árboles de transformación para organizar escenas y simular movimiento relativo entre objetos. Se busca comprender cómo las transformaciones afectan a los nodos hijos en una estructura padre-hijo y cómo visualizar estos efectos en tiempo real.
 
 ---
 
@@ -15,12 +15,10 @@ Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar
 
 Lista los principales conceptos aplicados:
 
-- [ ] Transformaciones geométricas (escala, rotación, traslación)
-- [ ] Segmentación de imágenes
-- [ ] Shaders y efectos visuales
-- [ ] Entrenamiento de modelos IA
-- [ ] Comunicación por gestos o voz
-- [ ] Otro: _______________________
+- [ ] Jerarquía de Objetos (Object Hierarchy)
+- [ ] Control de Transformaciones por Script
+- [ ] Interfaz de Usuario (UI) Básica y Eventos
+- [ ] Visualización de Datos en la Interfaz o Consola
 
 ---
 
@@ -28,10 +26,9 @@ Lista los principales conceptos aplicados:
 
 Especifica los entornos usados:
 
-- Python (`opencv-python`, `torch`, `mediapipe`, `diffusers`, etc.)
+
 - Unity (versión LTS, XR Toolkit, Shader Graph)
-- Three.js / React Three Fiber
-- Jupyter / Google Colab
+
 
 📌 Usa las herramientas según la [guía de instalación oficial](./guia_instalacion_entornos_visual.md)
 
@@ -40,10 +37,8 @@ Especifica los entornos usados:
 ## 📁 Estructura del Proyecto
 
 ```
-YYYY-MM-DD_nombre_taller/
-├── entorno/               # python/, unity/, threejs/, colab/
-├── datos/                 # imágenes, audio, modelos, video
-├── resultados/            # capturas, métricas, gifs
+2025-05-05_taller_jerarquias_transformaciones/
+├── unity/               
 ├── README.md
 ```
 
@@ -56,19 +51,39 @@ YYYY-MM-DD_nombre_taller/
 Explica el proceso:
 
 ### 🔹 Etapas realizadas
-1. Preparación de datos o escena.
-2. Aplicación de modelo o algoritmo.
-3. Visualización o interacción.
-4. Guardado de resultados.
+1. Crear una escena 3D con al menos 3 objetos anidados jerárquicamente (padre → hijo → nieto).
+2. Crear un script en C# para controlar las transformaciones del nodo padre con sliders (UI).
+3. Observar cómo los objetos hijos heredan las transformaciones.
+4. Mostrar los valores actuales de posición, rotación y escala en la interfaz o consola.
 
 ### 🔹 Código relevante
 
 Incluye un fragmento que resuma el corazón del taller:
 
-```python
-# Segmentación semántica con DeepLab
-output = model(input_tensor)['out']
-prediction = output.argmax(1).squeeze().cpu().numpy()
+```C#
+private void Update()
+    {
+        if (isAnimating)
+        {
+            animationTime += Time.deltaTime;
+            positionSlider.value = Mathf.Sin(animationTime) * positionRange;
+            rotationSlider.value = animationTime * 30f % rotationRange;
+            scaleSlider.value = (Mathf.Sin(animationTime * 0.5f) * 0.5f) + 1.5f;
+        }
+        
+        // Aplicar transformaciones
+        parentObject.localPosition = new Vector3(positionSlider.value, parentObject.localPosition.y, parentObject.localPosition.z);
+        parentObject.localEulerAngles = new Vector3(parentObject.localEulerAngles.x, rotationSlider.value, parentObject.localEulerAngles.z);
+        parentObject.localScale = new Vector3(parentObject.localScale.x, parentObject.localScale.y, scaleSlider.value);
+        
+        // Actualizar textos
+        positionText.text = $"Pos X: {parentObject.localPosition.x:F2}";
+        rotationText.text = $"Rot Y: {parentObject.localEulerAngles.y:F2}";
+        scaleText.text = $"Esc Z: {parentObject.localScale.z:F2}";
+        
+        // Mostrar valores de los hijos en consola (opcional)
+        Debug.Log($"Padre: {parentObject.localPosition}, Hijo: {parentObject.GetChild(0).localPosition}, Nieto: {parentObject.GetChild(0).GetChild(0).localPosition}");
+    }
 ```
 
 ---
@@ -79,18 +94,7 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 
 > ✅ Si tu taller lo indica, debes incluir **al menos un GIF** mostrando la ejecución o interacción.
 
-- Usa `Peek`, `ScreenToGif`, `OBS`, o desde Python (`imageio`) para generar el GIF.
-- **El nombre del GIF debe ser descriptivo del punto que estás presentando.**
-- Ejemplo correcto:  
-  `deteccion_colores_rojo_verde_torres.gif`  
-  `movimiento_robot_esquiva_obstaculos_gomez.gif`  
-  `shader_gradiente_temporal_lopez.gif`
-
-🧭 [Ver guía para crear GIFs](./guia_generar_gif.md)
-
-```markdown
-![deteccion](./resultados/deteccion_colores_rojo_verde_torres.gif)
-```
+![Explorando la Imagen como Matriz](Unity/Taller2Unity.gif)
 
 > ❌ No se aceptará la entrega si falta el GIF en talleres que lo requieren.
 
@@ -101,8 +105,8 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 Enumera los prompts utilizados:
 
 ```text
-"Create a photorealistic image of a robot painting a mural using Stable Diffusion"
-"Segment a car and a person using SAM at point (200, 300)"
+no se usarn prompst pero se uso el siguiente video de guia 
+(https://www.youtube.com/watch?v=x3FbFa843Pw)
 ```
 
 📎 Usa buenas prácticas de prompts según la [guía de IA actualizada](./guia_prompts_inteligencias_artificiales_actualizada.md)
@@ -113,31 +117,6 @@ Enumera los prompts utilizados:
 
 Responde en 2-3 párrafos:
 
-- ¿Qué aprendiste o reforzaste con este taller?
-- ¿Qué parte fue más compleja o interesante?
-- ¿Qué mejorarías o qué aplicarías en futuros proyectos?
-
----
-
-## 👥 Contribuciones Grupales (si aplica)
-
-Describe exactamente lo que hiciste tú:
-
-```markdown
-- Programé el detector de postura en MediaPipe
-- Generé los GIFs y documentación
-- Integré el control de voz con visualización en Unity
-```
-
----
-
-## ✅ Checklist de Entrega
-
-- [x] Carpeta `YYYY-MM-DD_nombre_taller`
-- [x] Código limpio y funcional
-- [x] GIF incluido con nombre descriptivo (si el taller lo requiere)
-- [x] Visualizaciones o métricas exportadas
-- [x] README completo y claro
-- [x] Commits descriptivos en inglés
+- En internet hay un montón de cosas, sobre todo para aprender lo básico, que creo que es justo lo que vemos en este taller. Igual, siempre me ha costado un rato pillar cómo va Unity.
 
 ---

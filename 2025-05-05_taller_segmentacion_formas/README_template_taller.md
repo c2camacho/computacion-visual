@@ -1,13 +1,13 @@
-# 🧪 Nombre del Taller
+# 🧪 Segmentando el Mundo: Binarización y Reconocimiento de Formas
 
 ## 📅 Fecha
-`YYYY-MM-DD` – Fecha de entrega o realización
+`2025-05-05` – Fecha de entrega 
 
 ---
 
 ## 🎯 Objetivo del Taller
 
-Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar o construir?
+Aplicar técnicas básicas de segmentación en imágenes mediante umbralización y detección de formas simples. El objetivo es comprender cómo identificar regiones de interés en imágenes mediante procesos de binarización y análisis morfológico.
 
 ---
 
@@ -15,12 +15,7 @@ Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar
 
 Lista los principales conceptos aplicados:
 
-- [ ] Transformaciones geométricas (escala, rotación, traslación)
-- [ ] Segmentación de imágenes
-- [ ] Shaders y efectos visuales
-- [ ] Entrenamiento de modelos IA
-- [ ] Comunicación por gestos o voz
-- [ ] Otro: _______________________
+- [ ] Manipular imagenes 
 
 ---
 
@@ -29,9 +24,7 @@ Lista los principales conceptos aplicados:
 Especifica los entornos usados:
 
 - Python (`opencv-python`, `torch`, `mediapipe`, `diffusers`, etc.)
-- Unity (versión LTS, XR Toolkit, Shader Graph)
-- Three.js / React Three Fiber
-- Jupyter / Google Colab
+- Google Colab
 
 📌 Usa las herramientas según la [guía de instalación oficial](./guia_instalacion_entornos_visual.md)
 
@@ -40,10 +33,8 @@ Especifica los entornos usados:
 ## 📁 Estructura del Proyecto
 
 ```
-YYYY-MM-DD_nombre_taller/
-├── entorno/               # python/, unity/, threejs/, colab/
-├── datos/                 # imágenes, audio, modelos, video
-├── resultados/            # capturas, métricas, gifs
+2025-05-05_taller_ojos_digitales/
+├── python/                  
 ├── README.md
 ```
 
@@ -56,19 +47,26 @@ YYYY-MM-DD_nombre_taller/
 Explica el proceso:
 
 ### 🔹 Etapas realizadas
-1. Preparación de datos o escena.
-2. Aplicación de modelo o algoritmo.
-3. Visualización o interacción.
-4. Guardado de resultados.
+1. Cargar una imagen en escala de grises.
+2. Realizar segmentación binaria
+3. Detectar contornos con cv2.findContours()
 
 ### 🔹 Código relevante
 
 Incluye un fragmento que resuma el corazón del taller:
 
 ```python
-# Segmentación semántica con DeepLab
-output = model(input_tensor)['out']
-prediction = output.argmax(1).squeeze().cpu().numpy()
+# Aplicar filtros convolucionales
+    # Filtro de desenfoque (blur)
+    blur_filter = np.ones((5,5), np.float32)/25
+    blurred_image = cv2.filter2D(gray_image, -1, blur_filter)
+
+    # Filtro de sharpening (enfoque)
+    sharpening_filter = np.array([[-1, -1, -1],
+                                  [-1,  9, -1],
+                                  [-1, -1, -1]])
+    sharpened_image = cv2.filter2D(gray_image, -1, sharpening_filter)
+
 ```
 
 ---
@@ -79,18 +77,7 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 
 > ✅ Si tu taller lo indica, debes incluir **al menos un GIF** mostrando la ejecución o interacción.
 
-- Usa `Peek`, `ScreenToGif`, `OBS`, o desde Python (`imageio`) para generar el GIF.
-- **El nombre del GIF debe ser descriptivo del punto que estás presentando.**
-- Ejemplo correcto:  
-  `deteccion_colores_rojo_verde_torres.gif`  
-  `movimiento_robot_esquiva_obstaculos_gomez.gif`  
-  `shader_gradiente_temporal_lopez.gif`
-
-🧭 [Ver guía para crear GIFs](./guia_generar_gif.md)
-
-```markdown
-![deteccion](./resultados/deteccion_colores_rojo_verde_torres.gif)
-```
+![Explorando la Imagen como Matriz](python/Taller4Py.gif)
 
 > ❌ No se aceptará la entrega si falta el GIF en talleres que lo requieren.
 
@@ -101,8 +88,7 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 Enumera los prompts utilizados:
 
 ```text
-"Create a photorealistic image of a robot painting a mural using Stable Diffusion"
-"Segment a car and a person using SAM at point (200, 300)"
+"Design a step-by-step Python tutorial using OpenCV and Matplotlib that demonstrates fundamental image processing techniques. The tutorial must: (1) Load a color image and convert it to grayscale using cv2.cvtColor(), (2) Apply basic convolutional filters including blur (3x3 averaging kernel) and sharpening (kernel: [[0,-1,0],[-1,5,-1],[0,-1,0]]), (3) Implement edge detection using both Sobel (X and Y directions, then combined magnitude) and Laplacian operators, (4) Display all intermediate and final results (original, grayscale, blurred, sharpened, Sobel-X, Sobel-Y, combined Sobel, and Laplacian) in a comparative grid using matplotlib.pyplot.subplots(), and (5) Include a brief analysis comparing edge detection performance between Sobel and Laplacian methods. Provide complete, executable Python code with: proper kernel definitions as NumPy arrays, normalization of output images, clear comments explaining each operation, and labeled subplots with titles. Use cv2 for image operations, numpy for matrix computations, and matplotlib for visualization. Ensure the code handles common edge cases like image loading errors and includes parameter explanations for key functions like cv2.filter2D() and cv2.Sobel()."
 ```
 
 📎 Usa buenas prácticas de prompts según la [guía de IA actualizada](./guia_prompts_inteligencias_artificiales_actualizada.md)
@@ -113,31 +99,6 @@ Enumera los prompts utilizados:
 
 Responde en 2-3 párrafos:
 
-- ¿Qué aprendiste o reforzaste con este taller?
-- ¿Qué parte fue más compleja o interesante?
-- ¿Qué mejorarías o qué aplicarías en futuros proyectos?
-
----
-
-## 👥 Contribuciones Grupales (si aplica)
-
-Describe exactamente lo que hiciste tú:
-
-```markdown
-- Programé el detector de postura en MediaPipe
-- Generé los GIFs y documentación
-- Integré el control de voz con visualización en Unity
-```
-
----
-
-## ✅ Checklist de Entrega
-
-- [x] Carpeta `YYYY-MM-DD_nombre_taller`
-- [x] Código limpio y funcional
-- [x] GIF incluido con nombre descriptivo (si el taller lo requiere)
-- [x] Visualizaciones o métricas exportadas
-- [x] README completo y claro
-- [x] Commits descriptivos en inglés
+- Creo que entiendo un poco más lo de encontrar regiones de interés y filtrarlas, pero el pelaje de los gatos no es bueno para esto.
 
 ---

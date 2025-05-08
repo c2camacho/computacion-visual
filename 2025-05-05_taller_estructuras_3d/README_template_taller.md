@@ -1,13 +1,13 @@
-# 🧪 Nombre del Taller
+# 🧪 Construyendo el Mundo 3D: Vértices, Aristas y Caras
 
 ## 📅 Fecha
-`YYYY-MM-DD` – Fecha de entrega o realización
+`2025-05-05` – Fecha de entrega
 
 ---
 
 ## 🎯 Objetivo del Taller
 
-Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar o construir?
+Comprender las estructuras gráficas básicas que forman los modelos 3D (mallas poligonales) y visualizar su estructura en distintas plataformas. Se explorará la diferencia entre vértice, arista y cara, así como el contenido de formatos de archivo estándar de malla como .OBJ, .STL y .GLTF.
 
 ---
 
@@ -15,12 +15,9 @@ Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar
 
 Lista los principales conceptos aplicados:
 
-- [ ] Transformaciones geométricas (escala, rotación, traslación)
-- [ ] Segmentación de imágenes
-- [ ] Shaders y efectos visuales
-- [ ] Entrenamiento de modelos IA
-- [ ] Comunicación por gestos o voz
-- [ ] Otro: _______________________
+- [ ] Importación de Modelos 3D
+- [ ] Análisis de Mallas (Mesh) en Tiempo de Ejecución
+- [ ] Visualización en Modo Wireframe
 
 ---
 
@@ -30,8 +27,7 @@ Especifica los entornos usados:
 
 - Python (`opencv-python`, `torch`, `mediapipe`, `diffusers`, etc.)
 - Unity (versión LTS, XR Toolkit, Shader Graph)
-- Three.js / React Three Fiber
-- Jupyter / Google Colab
+-  Google Colab
 
 📌 Usa las herramientas según la [guía de instalación oficial](./guia_instalacion_entornos_visual.md)
 
@@ -40,10 +36,9 @@ Especifica los entornos usados:
 ## 📁 Estructura del Proyecto
 
 ```
-YYYY-MM-DD_nombre_taller/
-├── entorno/               # python/, unity/, threejs/, colab/
-├── datos/                 # imágenes, audio, modelos, video
-├── resultados/            # capturas, métricas, gifs
+2025-05-05_taller_estructuras_3d/
+├── python/               
+├── unity/                 
 ├── README.md
 ```
 
@@ -56,19 +51,46 @@ YYYY-MM-DD_nombre_taller/
 Explica el proceso:
 
 ### 🔹 Etapas realizadas
-1. Preparación de datos o escena.
-2. Aplicación de modelo o algoritmo.
-3. Visualización o interacción.
-4. Guardado de resultados.
+1. Configuración del Proyecto en Unity.
+2. Creación del Script C# (Análisis del Modelo).
+3. Visualización Wireframe con Gizmos.
+4. Alternar Vista Sólida/Wireframe.
+5. Validación en el Editor
 
 ### 🔹 Código relevante
 
 Incluye un fragmento que resuma el corazón del taller:
 
-```python
-# Segmentación semántica con DeepLab
-output = model(input_tensor)['out']
-prediction = output.argmax(1).squeeze().cpu().numpy()
+```C#
+void PrintMeshInfo()
+    {
+        if (mesh == null) return;
+
+        Debug.Log("Mesh Information:");
+        Debug.Log($"Number of vertices: {mesh.vertexCount}");
+        Debug.Log($"Number of triangles: {mesh.triangles.Length / 3}");
+        Debug.Log($"Number of submeshes: {mesh.subMeshCount}");
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!showWireframe || mesh == null) return;
+
+        Gizmos.color = wireframeColor;
+        Gizmos.matrix = transform.localToWorldMatrix;
+
+        // Draw wireframe
+        for (int i = 0; i < mesh.triangles.Length; i += 3)
+        {
+            Vector3 v1 = mesh.vertices[mesh.triangles[i]];
+            Vector3 v2 = mesh.vertices[mesh.triangles[i + 1]];
+            Vector3 v3 = mesh.vertices[mesh.triangles[i + 2]];
+
+            Gizmos.DrawLine(v1, v2);
+            Gizmos.DrawLine(v2, v3);
+            Gizmos.DrawLine(v3, v1);
+        }
+    }
 ```
 
 ---
@@ -79,18 +101,9 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 
 > ✅ Si tu taller lo indica, debes incluir **al menos un GIF** mostrando la ejecución o interacción.
 
-- Usa `Peek`, `ScreenToGif`, `OBS`, o desde Python (`imageio`) para generar el GIF.
-- **El nombre del GIF debe ser descriptivo del punto que estás presentando.**
-- Ejemplo correcto:  
-  `deteccion_colores_rojo_verde_torres.gif`  
-  `movimiento_robot_esquiva_obstaculos_gomez.gif`  
-  `shader_gradiente_temporal_lopez.gif`
+![Vértices, Aristas y Caras](python/Talle1Unity.gif)
 
-🧭 [Ver guía para crear GIFs](./guia_generar_gif.md)
-
-```markdown
-![deteccion](./resultados/deteccion_colores_rojo_verde_torres.gif)
-```
+![Vértices, Aristas y Caras](python/Taller1Py.gif)
 
 > ❌ No se aceptará la entrega si falta el GIF en talleres que lo requieren.
 
@@ -101,8 +114,7 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 Enumera los prompts utilizados:
 
 ```text
-"Create a photorealistic image of a robot painting a mural using Stable Diffusion"
-"Segment a car and a person using SAM at point (200, 300)"
+"Create a step-by-step guide for a Unity workshop focused on 3D model analysis and wireframe visualization. The guide should cover: 1) Project setup in Unity LTS including 3D model import (.OBJ/.STL); 2) C# scripting to analyze and display vertex/triangle/submesh counts; 3) Two wireframe visualization methods (Gizmos for editor view and optional shader-based for runtime); 4) UI implementation with toggle buttons for view switching; 5) Validation and troubleshooting common issues; 6) Optional extensions like line thickness adjustment. Provide: numbered steps, complete C# code snippets with key explanations, visual examples of wireframe vs solid views, and warning callouts for critical steps. Format as a clear instructional document suitable for beginners, maintaining technical accuracy while avoiding unnecessary complexity. Include both editor-only and runtime solutions where applicable."
 ```
 
 📎 Usa buenas prácticas de prompts según la [guía de IA actualizada](./guia_prompts_inteligencias_artificiales_actualizada.md)
@@ -113,31 +125,6 @@ Enumera los prompts utilizados:
 
 Responde en 2-3 párrafos:
 
-- ¿Qué aprendiste o reforzaste con este taller?
-- ¿Qué parte fue más compleja o interesante?
-- ¿Qué mejorarías o qué aplicarías en futuros proyectos?
-
----
-
-## 👥 Contribuciones Grupales (si aplica)
-
-Describe exactamente lo que hiciste tú:
-
-```markdown
-- Programé el detector de postura en MediaPipe
-- Generé los GIFs y documentación
-- Integré el control de voz con visualización en Unity
-```
-
----
-
-## ✅ Checklist de Entrega
-
-- [x] Carpeta `YYYY-MM-DD_nombre_taller`
-- [x] Código limpio y funcional
-- [x] GIF incluido con nombre descriptivo (si el taller lo requiere)
-- [x] Visualizaciones o métricas exportadas
-- [x] README completo y claro
-- [x] Commits descriptivos en inglés
+- Primera vez que uso Unity, cosas como mover la cámara fácilmente me demoré en descubrir, pero paso a paso veo lo fuerte que es como herramienta.
 
 ---

@@ -1,13 +1,13 @@
-# 🧪 Nombre del Taller
+# 🧪 Filtro Visual: Convoluciones Personalizadas
 
 ## 📅 Fecha
-`YYYY-MM-DD` – Fecha de entrega o realización
+`2025-05-05` – Fecha de entrega 
 
 ---
 
 ## 🎯 Objetivo del Taller
 
-Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar o construir?
+Diseñar e implementar filtros personalizados en imágenes para modificar bordes, difuminar o realzar detalles. Este taller busca profundizar en el concepto de convolución y su impacto visual en el procesamiento de imágenes.
 
 ---
 
@@ -15,12 +15,12 @@ Describe brevemente el objetivo del taller: ¿qué se pretende explorar, aplicar
 
 Lista los principales conceptos aplicados:
 
-- [ ] Transformaciones geométricas (escala, rotación, traslación)
-- [ ] Segmentación de imágenes
-- [ ] Shaders y efectos visuales
-- [ ] Entrenamiento de modelos IA
-- [ ] Comunicación por gestos o voz
-- [ ] Otro: _______________________
+- [ ] Manipulación básica de imágenes
+- [ ] Convolución 2D y kernels
+- [ ] Efectos de kernels comunes
+- [ ] Validación y comparación
+- [ ] Entender el impacto visual de kernels personalizados.
+
 
 ---
 
@@ -29,8 +29,6 @@ Lista los principales conceptos aplicados:
 Especifica los entornos usados:
 
 - Python (`opencv-python`, `torch`, `mediapipe`, `diffusers`, etc.)
-- Unity (versión LTS, XR Toolkit, Shader Graph)
-- Three.js / React Three Fiber
 - Jupyter / Google Colab
 
 📌 Usa las herramientas según la [guía de instalación oficial](./guia_instalacion_entornos_visual.md)
@@ -40,10 +38,8 @@ Especifica los entornos usados:
 ## 📁 Estructura del Proyecto
 
 ```
-YYYY-MM-DD_nombre_taller/
-├── entorno/               # python/, unity/, threejs/, colab/
-├── datos/                 # imágenes, audio, modelos, video
-├── resultados/            # capturas, métricas, gifs
+2025-05-05_taller_convoluciones_personalizadas/
+├── python/               
 ├── README.md
 ```
 
@@ -56,19 +52,38 @@ YYYY-MM-DD_nombre_taller/
 Explica el proceso:
 
 ### 🔹 Etapas realizadas
-1. Preparación de datos o escena.
-2. Aplicación de modelo o algoritmo.
-3. Visualización o interacción.
-4. Guardado de resultados.
+1. Familiarización y Carga de Modelos (Getting Started with 3D Models)
+2. Inspección de Propiedades Básicas (Basic Property Inspection)
+3. Visualización de Modelos (Model Visualization)
+4. Conversión de Formatos (Format Conversion)
 
 ### 🔹 Código relevante
 
 Incluye un fragmento que resuma el corazón del taller:
 
 ```python
-# Segmentación semántica con DeepLab
-output = model(input_tensor)['out']
-prediction = output.argmax(1).squeeze().cpu().numpy()
+# Definición de kernels
+kernels = {
+    # Sharpening (Enfocado)
+    'sharpening': np.array([
+        [0, -1, 0],
+        [-1, 5, -1],
+        [0, -1, 0]
+    ]),
+
+    # Blur (Suavizado)
+    'blur': (1/9) * np.array([
+        [1, 1, 1],
+        [1, 1, 1],
+        [1, 1, 1]
+    ]),
+
+    # Detección de bordes (Sobel en X)
+    'edge_detection': np.array([
+        [-1, 0, 1],
+        [-2, 0, 2],
+        [-1, 0, 1]
+    ])
 ```
 
 ---
@@ -77,20 +92,11 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 
 ### 📌 Este taller **requiere explícitamente un GIF animado**:
 
+![Convoluciones Personalizadas](python/Taller10Py.gif)
+
 > ✅ Si tu taller lo indica, debes incluir **al menos un GIF** mostrando la ejecución o interacción.
 
-- Usa `Peek`, `ScreenToGif`, `OBS`, o desde Python (`imageio`) para generar el GIF.
-- **El nombre del GIF debe ser descriptivo del punto que estás presentando.**
-- Ejemplo correcto:  
-  `deteccion_colores_rojo_verde_torres.gif`  
-  `movimiento_robot_esquiva_obstaculos_gomez.gif`  
-  `shader_gradiente_temporal_lopez.gif`
 
-🧭 [Ver guía para crear GIFs](./guia_generar_gif.md)
-
-```markdown
-![deteccion](./resultados/deteccion_colores_rojo_verde_torres.gif)
-```
 
 > ❌ No se aceptará la entrega si falta el GIF en talleres que lo requieren.
 
@@ -101,8 +107,7 @@ prediction = output.argmax(1).squeeze().cpu().numpy()
 Enumera los prompts utilizados:
 
 ```text
-"Create a photorealistic image of a robot painting a mural using Stable Diffusion"
-"Segment a car and a person using SAM at point (200, 300)"
+Write Python code in a Colab or Jupyter Notebook to load .OBJ, .STL, and .GLTF 3D models using trimesh and open3d. For each model, calculate and print the vertex and face counts, and whether normals are present. Using trimesh, also report any duplicate vertices and degenerate faces. Visualize each model using both libraries' display functions. Then, using trimesh.exchange, convert one model to a different format and load/inspect its properties. Finally, create a script that takes a list of model file paths, loads each with trimesh, prints its properties, and displays it with the filename as the title.
 ```
 
 📎 Usa buenas prácticas de prompts según la [guía de IA actualizada](./guia_prompts_inteligencias_artificiales_actualizada.md)
@@ -113,31 +118,6 @@ Enumera los prompts utilizados:
 
 Responde en 2-3 párrafos:
 
-- ¿Qué aprendiste o reforzaste con este taller?
-- ¿Qué parte fue más compleja o interesante?
-- ¿Qué mejorarías o qué aplicarías en futuros proyectos?
-
----
-
-## 👥 Contribuciones Grupales (si aplica)
-
-Describe exactamente lo que hiciste tú:
-
-```markdown
-- Programé el detector de postura en MediaPipe
-- Generé los GIFs y documentación
-- Integré el control de voz con visualización en Unity
-```
-
----
-
-## ✅ Checklist de Entrega
-
-- [x] Carpeta `YYYY-MM-DD_nombre_taller`
-- [x] Código limpio y funcional
-- [x] GIF incluido con nombre descriptivo (si el taller lo requiere)
-- [x] Visualizaciones o métricas exportadas
-- [x] README completo y claro
-- [x] Commits descriptivos en inglés
+- no esperaba que las matrices se pudieran usar de este modo con la imagenes eso me deja pensando como funcionan estas
 
 ---
